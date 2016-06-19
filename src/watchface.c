@@ -24,9 +24,23 @@ static void window_unload(Window *window) {
   text_layer_destroy(weatherLayer);
 }
 
+static void inboxReceivedCallback(DictionaryIterator *iterator, void *context) {
+}
+
+static void inboxDroppedCallback(AppMessageResult reason, void* context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped");
+}
+
+static void outboxFailedCallback(DictionaryIterator *iterator, AppMessageResult reason, void* context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed");
+}
+
+static void outboxSentCallback(DictionaryIterator *iterator, void* context) {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success");
+}
+
 static void init(void) {
   window = window_create();
-  window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload,
@@ -36,6 +50,14 @@ static void init(void) {
   time_t temp = time(NULL);
   updateTime(localtime(&temp), timeLayer);
   tick_timer_service_subscribe(MINUTE_UNIT, tickHandler);
+
+  app_message_register_inbox_received(inboxReceivedCallback);
+  const int inboxSize = 128;
+  const int outboxSize = 128;
+  app_message_open(inboxSize, outboxSize);
+  app_message_register_inbox_dropped(inboxDroppedCallback);
+  app_message_register_outbox_failed(outboxFailedCallback);
+  app_message_register_outbox_sent(outboxSentCallback);
 }
 
 static void deinit(void) {
