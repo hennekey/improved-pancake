@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "author": "Hennekey",
+  "private": true,
+  "dependencies": {},
+  "keywords": [
+    "pebble-app"
+  ],
+  "pebble": {
+    "sdkVersion": "3",
+    "resources": {
+      "media": []
+    },
+    "projectType": "native",
+    "uuid": "08efe914-a1a7-4c44-96db-5ec1092759f7",
+    "messageKeys": {
+      "dummy": 0
+    },
+    "enableMultiJS": true,
+    "displayName": "watchface",
+    "watchapp": {
+      "onlyShownOnCommunication": false,
+      "hiddenApp": false,
+      "watchface": true
+    },
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk"
+    ],
+    "capabilities": []
+  },
+  "name": "watchface"
+}
