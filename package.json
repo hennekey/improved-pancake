@@ -28,7 +28,7 @@
       "basalt",
       "chalk"
     ],
-    "capabilities": []
+    "capabilities": ["location"]
   },
   "name": "watchface"
 }
